@@ -1,0 +1,9 @@
+---
+acpid_user: acpid
+acpid_group: acpid
+acpid_log_dir: /var/log/acpid
+acpid_db_dir: "{{ __acpid_db_dir }}"
+acpid_service: acpid
+acpid_conf_dir: "{{ __acpid_conf_dir }}"
+acpid_conf_file: "{{ __acpid_conf_dir }}/acpid.conf"
+acpid_flags: ""

@@ -1,0 +1,6 @@
+---
+
+- name: Install acpid
+  pkgng:
+    name: acpid
+    state: present

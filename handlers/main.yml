@@ -1,0 +1,6 @@
+---
+
+- name: Restart acpid
+  service:
+    name: acpid
+    state: restarted

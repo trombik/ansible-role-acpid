@@ -1,0 +1,37 @@
+---
+# tasks file for ansible-role-acpid
+
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- include: "install-{{ ansible_os_family }}.yml"
+
+- name: Create log directory
+  file:
+    path: "{{ acpid_log_dir }}"
+    mode: 0755
+    owner: "{{ acpid_user }}"
+    group: "{{ acpid_group }}"
+    state: directory
+  notify: Restart acpid
+
+- name: Create db directory
+  file:
+    path: "{{ acpid_db_dir }}"
+    mode: 0755
+    owner: "{{ acpid_user }}"
+    group: "{{ acpid_group }}"
+    state: directory
+  notify: Restart acpid
+
+- name: Create acpid.conf
+  template:
+    src: acpid.conf.j2
+    dest: "{{ acpid_conf_file }}"
+    validate: echo %s
+  notify: Restart acpid
+
+- name: Start acpid
+  service:
+    name: "{{ acpid_service }}"
+    enabled: true
+    state: started

@@ -1,0 +1,24 @@
+---
+
+- name: Install acpid
+  apt:
+    name: "{{ acpid_package }}"
+    state: present
+
+
+- name: Install acpid_extra_packages
+  apt:
+    name: "{{ acpid_extra_packages }}"
+    state: present
+
+- name: Create /etc/default/acpid
+  template:
+    src: Ubuntu.default.j2
+    dest: /etc/default/acpid
+    validate: sh -n %s
+  notify: Restart acpid
+
+- name: Enable acpid
+  service:
+    name: "{{ acpid_service }}"
+    enabled: true

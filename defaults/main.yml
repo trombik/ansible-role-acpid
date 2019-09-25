@@ -1,9 +1,8 @@
 ---
-acpid_user: acpid
-acpid_group: acpid
-acpid_log_dir: /var/log/acpid
-acpid_db_dir: "{{ __acpid_db_dir }}"
 acpid_service: acpid
+acpid_package: acpid
+acpid_extra_packages: []
 acpid_conf_dir: "{{ __acpid_conf_dir }}"
-acpid_conf_file: "{{ __acpid_conf_dir }}/acpid.conf"
+acpid_events_dir: "{{ acpid_conf_dir }}/events"
 acpid_flags: ""
+acpid_events: []

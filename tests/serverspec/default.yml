@@ -3,4 +3,11 @@
   roles:
     - ansible-role-acpid
   vars:
-    acpid_config: ""
+    acpid_flags: |
+      OPTIONS=""
+    acpid_events:
+      - name: foo
+        state: present
+        content: |
+          event=foo/bar
+          action=/bin/echo foo

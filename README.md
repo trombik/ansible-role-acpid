@@ -1,6 +1,6 @@
-# ansible-role-acpid
+# `trombik.acpid`
 
-A brief description of the role goes here.
+`ansible` role for `acpid`
 
 # Requirements
 
@@ -8,9 +8,31 @@ None
 
 # Role Variables
 
-| variable | description | default |
+| Variable | Description | Default |
 |----------|-------------|---------|
+| `acpid_service` | Service name of `acpid` | `acpid` |
+| `acpid_package` | Package name of `acpid` | `acpid` |
+| `acpid_extra_packages` | A list of extra packages to install | `[]` |
+| `acpid_conf_dir` | Path to configuration directory | `{{ __acpid_conf_dir }}` |
+| `acpid_events_dir` | Path to event configuration file directory | `{{ acpid_conf_dir }}/events` |
+| `acpid_flags` | Default options to pass `acpid` | `""` |
+| `acpid_events` | See below | `[]` |
 
+## `acpid_events`
+
+This variable is a list of dict.
+
+| Key | Description | Mandatory? |
+|-----|-------------|------------|
+| `state` | Either `present` or `absent` | No |
+| `content` | Content of the file | No |
+| `name` | File name | Yes |
+
+## Debian
+
+| Variable | Default |
+|----------|---------|
+| `__acpid_conf_dir` | `/etc/acpi` |
 
 # Dependencies
 
@@ -19,6 +41,19 @@ None
 # Example Playbook
 
 ```yaml
+---
+- hosts: localhost
+  roles:
+    - ansible-role-acpid
+  vars:
+    acpid_flags: |
+      OPTIONS=""
+    acpid_events:
+      - name: foo
+        state: present
+        content: |
+          event=foo/bar
+          action=/bin/echo foo
 ```
 
 # License

@@ -3,56 +3,26 @@ require "serverspec"
 
 package = "acpid"
 service = "acpid"
-config  = "/etc/acpid/acpid.conf"
-user    = "acpid"
-group   = "acpid"
-ports   = [PORTS]
-log_dir = "/var/log/acpid"
-db_dir  = "/var/lib/acpid"
-
-case os[:family]
-when "freebsd"
-  config = "/usr/local/etc/acpid.conf"
-  db_dir = "/var/db/acpid"
-end
+events_dir = "/etc/acpi/events"
 
 describe package(package) do
   it { should be_installed }
 end
 
-describe file(config) do
+describe file "/etc/default/acpid" do
   it { should be_file }
-  its(:content) { should match Regexp.escape("acpid") }
+  its(:content) { should match(/# Managed by ansible/) }
+  its(:content) { should match Regexp.escape('OPTIONS=""') }
 end
 
-describe file(log_dir) do
-  it { should exist }
-  it { should be_mode 755 }
-  it { should be_owned_by user }
-  it { should be_grouped_into group }
-end
-
-describe file(db_dir) do
-  it { should exist }
-  it { should be_mode 755 }
-  it { should be_owned_by user }
-  it { should be_grouped_into group }
-end
-
-case os[:family]
-when "freebsd"
-  describe file("/etc/rc.conf.d/acpid") do
-    it { should be_file }
-  end
+describe file("#{events_dir}/foo") do
+  it { should be_file }
+  its(:content) { should match(/# Managed by ansible/) }
+  its(:content) { should match Regexp.escape("event=foo/bar") }
+  its(:content) { should match Regexp.escape("action=/bin/echo foo") }
 end
 
 describe service(service) do
   it { should be_running }
   it { should be_enabled }
-end
-
-ports.each do |p|
-  describe port(p) do
-    it { should be_listening }
-  end
 end

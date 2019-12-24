@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: acpid
   author: Tomoyuki Sakurai
-  description: Configures something
+  description: Configures acpid on Linux
   company: N/A
   license: BSD
   min_ansible_version: 2.0
@@ -10,5 +10,8 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - xenial
+    - name: EL
+      versions:
+        - 7
   galaxy_tags:
-    - system12.0
+    - acpi

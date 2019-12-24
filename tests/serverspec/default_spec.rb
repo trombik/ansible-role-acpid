@@ -9,10 +9,19 @@ describe package(package) do
   it { should be_installed }
 end
 
-describe file "/etc/default/acpid" do
-  it { should be_file }
-  its(:content) { should match(/# Managed by ansible/) }
-  its(:content) { should match Regexp.escape('OPTIONS=""') }
+case os[:family]
+when "redhat"
+  describe file "/etc/sysconfig/acpid" do
+    it { should be_file }
+    its(:content) { should match(/# Managed by ansible/) }
+    its(:content) { should match Regexp.escape('OPTIONS=""') }
+  end
+when "ubuntu"
+  describe file "/etc/default/acpid" do
+    it { should be_file }
+    its(:content) { should match(/# Managed by ansible/) }
+    its(:content) { should match Regexp.escape('OPTIONS=""') }
+  end
 end
 
 describe file("#{events_dir}/foo") do

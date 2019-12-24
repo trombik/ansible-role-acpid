@@ -34,6 +34,12 @@ This variable is a list of dict.
 |----------|---------|
 | `__acpid_conf_dir` | `/etc/acpi` |
 
+## RedHat
+
+| Variable | Default |
+|----------|---------|
+| `__acpid_conf_dir` | `/etc/acpi` |
+
 # Dependencies
 
 None
